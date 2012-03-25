@@ -33,35 +33,35 @@ Yomu packages the Apache Tika application jar and thus requires a working JRE fo
 
 If you're not using Bundler, you will need to require Yomu in your application:
 
-  require 'yomu'
+    require 'yomu'
 
 You can extract text by calling `Yomu.read` directly:
 
-  data = File.read 'sample.pages'
-  text = Yomu.read :text, data
+    data = File.read 'sample.pages'
+    text = Yomu.read :text, data
 
 ##### Filename
 
 You can also make a new instance of Yomu and pass a filename.
 
-  yomu = Yomu.new 'sample.pages'
-  text = yomu.text
+    yomu = Yomu.new 'sample.pages'
+    text = yomu.text
 
 ##### URL
 
 This is useful for reading remote files, like documents hosted on Amazon S3.
 
-  yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
-  text = yomu.text
+    yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
+    text = yomu.text
 
 ##### Stream
 
 Yomu can also read from a stream or any object that responds to `read`, including Ruby on Rails' and Sinatra's file uploads:
 
-  post '/:name/:filename' do
-    yomu = Yomu.new params[:data]
-    yomu.text
-  end
+    post '/:name/:filename' do
+      yomu = Yomu.new params[:data]
+      yomu.text
+    end
 
 ## Contributing
 
