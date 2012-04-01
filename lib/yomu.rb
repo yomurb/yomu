@@ -1,4 +1,4 @@
-require "yomu/version"
+require 'yomu/version'
 
 require 'net/http'
 require 'yaml'
