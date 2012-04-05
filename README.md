@@ -1,5 +1,5 @@
 # Yomu 読む
-[Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata using the [Apache TIKA](http://tika.apache.org/) content analysis toolkit.
+[Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata from files and documents using the [Apache TIKA](http://tika.apache.org/) content analysis toolkit.
 
 Here are some of the formats supported:
 
