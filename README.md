@@ -27,7 +27,7 @@ Or install it yourself as:
 
     $ gem install yomu
 
-Yomu packages the Apache TIKA application jar and thus requires a working JRE for it to work.
+**Yomu packages the Apache TIKA application jar and requires a working JRE for it to work.**
 
 ## Usage
 
