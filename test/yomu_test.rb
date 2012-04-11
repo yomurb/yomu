@@ -23,23 +23,61 @@ class YomuTest < MiniTest::Unit::TestCase
     end
   end
 
-  def test_yomu_can_be_initialized_with_a_path
+  def test_yomu_can_be_initialized_with_a_root_path
     assert_silent do
-      Yomu.new 'test/samples/sample.pages'
+      yomu = Yomu.new File.join(File.dirname(__FILE__), 'samples/sample.pages')
+
+      assert_block { yomu.path? }
+      assert_block { !yomu.uri? }
+      assert_block { !yomu.stream? }
     end
   end
 
-  def test_yomu_can_be_initialized_with_a_url
+  def test_yomu_can_be_initialized_with_a_relative_path
     assert_silent do
-      Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
+      yomu = Yomu.new 'test/samples/sample.pages'
+
+      assert_block { yomu.path? }
+      assert_block { !yomu.uri? }
+      assert_block { !yomu.stream? }
+    end
+  end
+
+  def test_yomu_can_be_initialized_with_a_path_with_spaces
+    assert_silent do
+      yomu = Yomu.new 'test/samples/sample filename with spaces.pages'
+
+      assert_block { yomu.path? }
+      assert_block { !yomu.uri? }
+      assert_block { !yomu.stream? }
+    end
+  end
+
+  def test_yomu_can_be_initialized_with_a_uri
+    assert_silent do
+      yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
+
+      assert_block { yomu.uri? }
+      assert_block { !yomu.path? }
+      assert_block { !yomu.stream? }
     end
   end
 
   def test_yomu_can_be_initialized_with_a_stream_or_object_that_can_be_read
     assert_silent do
       File.open 'test/samples/sample.pages', 'r' do |file|
-        Yomu.new file
+        yomu = Yomu.new file
+
+      assert_block { yomu.stream? }
+      assert_block { !yomu.path? }
+      assert_block { !yomu.uri? }
       end
+    end
+  end
+
+  def test_yomu_cannot_be_initialized_with_a_path_to_a_missing_file
+    assert_raises Errno::ENOENT do
+      Yomu.new 'test/sample/missing.pages'
     end
   end
 

@@ -46,11 +46,12 @@ class Yomu
 
   def initialize(input)
     if input.is_a? String
-      uri = URI.parse input
-      if uri.scheme and uri.host
-        @uri = uri
-      else
+      if input =~ URI::regexp
+        @uri = URI.parse input
+      elsif File.exists? input
         @path = input
+      else
+        raise Errno::ENOENT.new "missing file or invalid URI - #{input}"
       end
     elsif input.respond_to? :read
       @stream = input
@@ -81,16 +82,28 @@ class Yomu
     @metadata = Yomu.read :metadata, data
   end
 
+  def path?
+    defined? @path
+  end
+
+  def uri?
+    defined? @uri
+  end
+
+  def stream?
+    defined? @stream
+  end
+
   protected
 
   def data
     return @data if defined? @data
 
-    if defined? @path
+    if path?
       @data = File.read @path
-    elsif defined? @uri
+    elsif uri?
       @data = Net::HTTP.get @uri
-    elsif defined? @stream
+    elsif stream?
       @data = @stream.read
     end
 
