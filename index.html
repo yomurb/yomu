@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Yomu by Erol</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Yomu</h1>
+        <p>Read text and metadata from files and documents (.doc, .docx, .pages, .odt, .rtf, .pdf)</p>
+        <p class="view"><a href="https://github.com/Erol/yomu">View the Project on GitHub <small>Erol/yomu</small></a></p>
+        <ul>
+          <li><a href="https://github.com/Erol/yomu/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Erol/yomu/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Erol/yomu">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Yomu 読む</h1>
+
+<p><a href="http://erol.github.com/yomu">Yomu</a> is a library for reading text and metadata from files and documents using the <a href="http://tika.apache.org/">Apache TIKA</a> content analysis toolkit.</p>
+
+<p>Here are some of the formats supported:</p>
+
+<ul>
+<li>Microsoft Office OLE 2 and Office Open XML Formats (.doc, .docx, .xls, .xlsx,
+.ppt, .pptx)</li>
+<li>OpenOffice.org OpenDocument Formats (.odt, .ods, .odp)</li>
+<li>Apple iWorks Formats</li>
+<li>Rich Text Format (.rtf)</li>
+<li>Portable Document Format (.pdf)</li>
+</ul><p>For the complete list of supported formats, please visit the Apache TIKA
+<a href="http://tika.apache.org/0.9/formats.html">Supported Document Formats</a> page.</p>
+
+<h2>Installation and Dependencies</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'yomu'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install yomu
+</code></pre>
+
+<p><strong>Yomu packages the Apache TIKA application jar and requires a working JRE for it to work.</strong></p>
+
+<h2>Usage</h2>
+
+<p>If you're not using Bundler, you will need to require Yomu in your application:</p>
+
+<pre><code>require 'yomu'
+</code></pre>
+
+<p>You can extract text by calling <code>Yomu.read</code> directly:</p>
+
+<pre><code>data = File.read 'sample.pages'
+text = Yomu.read :text, data
+</code></pre>
+
+<h3>Reading text from a given filename</h3>
+
+<p>You can also make a new instance of Yomu and pass a filename.</p>
+
+<pre><code>yomu = Yomu.new 'sample.pages'
+text = yomu.text
+</code></pre>
+
+<h3>Reading text from a given URL</h3>
+
+<p>This is useful for reading remote files, like documents hosted on Amazon S3.</p>
+
+<pre><code>yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
+text = yomu.text
+</code></pre>
+
+<h3>Reading text from a stream</h3>
+
+<p>Yomu can also read from a stream or any object that responds to <code>read</code>, including Ruby on Rails' and Sinatra's file uploads:</p>
+
+<pre><code>post '/:name/:filename' do
+  yomu = Yomu.new params[:data]
+  yomu.text
+end
+</code></pre>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch ( <code>git checkout -b my-new-feature</code> )</li>
+<li>Create tests and make them pass ( <code>rake test</code> )</li>
+<li>Commit your changes ( <code>git commit -am 'Added some feature'</code> )</li>
+<li>Push to the branch ( <code>git push origin my-new-feature</code> )</li>
+<li>Create a new Pull Request</li>
+</ol>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Erol">Erol</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-31066891-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
