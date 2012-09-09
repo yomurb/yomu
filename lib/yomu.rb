@@ -30,7 +30,7 @@ class Yomu
     type == :metadata ? YAML.load(result) : result
   end
 
-  # Create a new instance of Yomu.
+  # Create a new instance of Yomu with a given document.
   #
   # Using a file path:
   #
@@ -40,7 +40,7 @@ class Yomu
   #
   #   Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
   #
-  # Using a stream or object which responds to +read+
+  # From a stream or an object which responds to +read+
   #
   #   Yomu.new File.open('sample.pages')
 
@@ -60,7 +60,7 @@ class Yomu
     end
   end
 
-  # Returns the text contents of a Yomu object.
+  # Returns the text content of the Yomu document.
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.text
@@ -71,24 +71,40 @@ class Yomu
     @text = Yomu.read :text, data
   end
 
-  # Returns the metadata hash of a Yomu object.
+  # Returns the metadata hash of the Yomu document.
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.metadata['Content-Type']
-  
+
   def metadata
     return @metadata if defined? @metadata
 
     @metadata = Yomu.read :metadata, data
   end
 
+  # Returns +true+ if the Yomu document was specified using a file path.
+  #
+  #   yomu = Yomu.new 'sample.pages'
+  #   yomu.path? #=> true
+
   def path?
     defined? @path
   end
 
+  # Returns +true+ if the Yomu document was specified using a URI.
+  #
+  #   yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
+  #   yomu.uri? #=> true
+
   def uri?
     defined? @uri
   end
+
+  # Returns +true+ if the Yomu document was specified from a stream or an object which responds to +read+.
+  #
+  #   file = File.open('sample.pages')
+  #   yomu = Yomu.new file
+  #   yomu.stream? #=> true
 
   def stream?
     defined? @stream
