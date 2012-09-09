@@ -1,5 +1,5 @@
 # Yomu 読む
-[Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata from files and documents using the [Apache TIKA](http://tika.apache.org/) content analysis toolkit.
+[Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata from files and documents using the [Apache Tika](http://tika.apache.org/) content analysis toolkit.
 
 Here are some of the formats supported:
 
@@ -10,7 +10,7 @@ Here are some of the formats supported:
 - Rich Text Format (.rtf)
 - Portable Document Format (.pdf)
 
-For the complete list of supported formats, please visit the Apache TIKA
+For the complete list of supported formats, please visit the Apache Tika
 [Supported Document Formats](http://tika.apache.org/0.9/formats.html) page.
 
 ## Installation and Dependencies
@@ -27,7 +27,7 @@ Or install it yourself as:
 
     $ gem install yomu
 
-**Yomu packages the Apache TIKA application jar and requires a working JRE for it to work.**
+**Yomu packages the Apache Tika application jar and requires a working JRE for it to work.**
 
 ## Usage
 
