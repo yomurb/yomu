@@ -110,7 +110,10 @@ class Yomu
     defined? @stream
   end
 
-  protected
+  # Returns the raw/unparsed content of the Yomu document.
+  #
+  #   yomu = Yomu.new 'sample.pages'
+  #   yomu.data
 
   def data
     return @data if defined? @data
