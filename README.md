@@ -15,11 +15,9 @@ For the complete list of supported formats, please visit the Apache Tika
 
 ## Usage
 
-If you're not using Bundler, you will need to require Yomu in your application:
+You can extract text by calling `Yomu.read` directly:
 
     require 'yomu'
-
-You can extract text by calling `Yomu.read` directly:
 
     data = File.read 'sample.pages'
     text = Yomu.read :text, data
