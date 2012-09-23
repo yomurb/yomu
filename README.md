@@ -13,22 +13,6 @@ Here are some of the formats supported:
 For the complete list of supported formats, please visit the Apache Tika
 [Supported Document Formats](http://tika.apache.org/0.9/formats.html) page.
 
-## Installation and Dependencies
-
-Add this line to your application's Gemfile:
-
-    gem 'yomu'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install yomu
-
-**Yomu packages the Apache Tika application jar and requires a working JRE for it to work.**
-
 ## Usage
 
 If you're not using Bundler, you will need to require Yomu in your application:
@@ -62,6 +46,22 @@ Yomu can also read from a stream or any object that responds to `read`, includin
       yomu = Yomu.new params[:data]
       yomu.text
     end
+
+## Installation and Dependencies
+
+Add this line to your application's Gemfile:
+
+    gem 'yomu'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install yomu
+
+**Yomu packages the Apache Tika application jar and requires a working JRE for it to work.**
 
 ## Contributing
 
