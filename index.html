@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Yomu by Erol</title>
-    
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -17,17 +17,20 @@
       <header>
         <h1>Yomu</h1>
         <p>Read text and metadata from files and documents (.doc, .docx, .pages, .odt, .rtf, .pdf)</p>
+
         <p class="view"><a href="https://github.com/Erol/yomu">View the Project on GitHub <small>Erol/yomu</small></a></p>
+
+
         <ul>
           <li><a href="https://github.com/Erol/yomu/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/Erol/yomu/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/Erol/yomu">Fork On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/Erol/yomu">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
         <h1>Yomu 読む</h1>
 
-<p><a href="http://erol.github.com/yomu">Yomu</a> is a library for reading text and metadata from files and documents using the <a href="http://tika.apache.org/">Apache TIKA</a> content analysis toolkit.</p>
+<p><a href="http://erol.github.com/yomu">Yomu</a> is a library for extracting text and metadata from files and documents using the <a href="http://tika.apache.org/">Apache Tika</a> content analysis toolkit.</p>
 
 <p>Here are some of the formats supported:</p>
 
@@ -38,38 +41,16 @@
 <li>Apple iWorks Formats</li>
 <li>Rich Text Format (.rtf)</li>
 <li>Portable Document Format (.pdf)</li>
-</ul><p>For the complete list of supported formats, please visit the Apache TIKA
+</ul><p>For the complete list of supported formats, please visit the Apache Tika
 <a href="http://tika.apache.org/0.9/formats.html">Supported Document Formats</a> page.</p>
-
-<h2>Installation and Dependencies</h2>
-
-<p>Add this line to your application's Gemfile:</p>
-
-<pre><code>gem 'yomu'
-</code></pre>
-
-<p>And then execute:</p>
-
-<pre><code>$ bundle
-</code></pre>
-
-<p>Or install it yourself as:</p>
-
-<pre><code>$ gem install yomu
-</code></pre>
-
-<p><strong>Yomu packages the Apache TIKA application jar and requires a working JRE for it to work.</strong></p>
 
 <h2>Usage</h2>
 
-<p>If you're not using Bundler, you will need to require Yomu in your application:</p>
-
-<pre><code>require 'yomu'
-</code></pre>
-
 <p>You can extract text by calling <code>Yomu.read</code> directly:</p>
 
-<pre><code>data = File.read 'sample.pages'
+<pre><code>require 'yomu'
+
+data = File.read 'sample.pages'
 text = Yomu.read :text, data
 </code></pre>
 
@@ -98,6 +79,25 @@ text = yomu.text
   yomu.text
 end
 </code></pre>
+
+<h2>Installation and Dependencies</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'yomu'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install yomu
+</code></pre>
+
+<p><strong>Yomu packages the Apache Tika application jar and requires a working JRE for it to work.</strong></p>
 
 <h2>Contributing</h2>
 
