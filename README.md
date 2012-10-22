@@ -15,16 +15,17 @@ For the complete list of supported formats, please visit the Apache Tika
 
 ## Usage
 
-You can extract text by calling `Yomu.read` directly:
+Text and metadata can be extracted by calling `Yomu.read` directly:
 
     require 'yomu'
 
     data = File.read 'sample.pages'
     text = Yomu.read :text, data
+    metadata = Yomu.read :metadata, data
 
 ### Reading text from a given filename
 
-You can also make a new instance of Yomu and pass a filename.
+Create a new instance of Yomu and pass a filename.
 
     yomu = Yomu.new 'sample.pages'
     text = yomu.text
@@ -38,12 +39,19 @@ This is useful for reading remote files, like documents hosted on Amazon S3.
 
 ### Reading text from a stream
 
-Yomu can also read from a stream or any object that responds to `read`, including Ruby on Rails' and Sinatra's file uploads:
+Yomu can also read from a stream or any object that responds to `read`, including file uploads from Ruby on Rails or Sinatra.
 
     post '/:name/:filename' do
-      yomu = Yomu.new params[:data]
+      yomu = Yomu.new params[:data][:tempfile]
       yomu.text
     end
+
+### Reading metadata
+
+Metadata is returned as a hash.
+
+    yomu = Yomu.new 'sample.pages'
+    yomu.metadata['Content-Type'] #=> "application/vnd.apple.pages"
 
 ## Installation and Dependencies
 
