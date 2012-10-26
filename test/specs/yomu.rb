@@ -25,55 +25,65 @@ describe Yomu do
     end
 
     it 'accepts a root path' do
+      yomu = nil
+
       assert_silent do
         yomu = Yomu.new 'test/samples/sample.pages'
-
-        assert_block { yomu.path? }
-        assert_block { !yomu.uri? }
-        assert_block { !yomu.stream? }
       end
+
+      assert yomu.path?
+      refute yomu.uri?
+      refute yomu.stream?
     end
 
     it 'accepts a relative path' do
+      yomu = nil
+
       assert_silent do
         yomu = Yomu.new 'test/samples/sample.pages'
-
-        assert_block { yomu.path? }
-        assert_block { !yomu.uri? }
-        assert_block { !yomu.stream? }
       end
+
+      assert yomu.path?
+      refute yomu.uri?
+      refute yomu.stream?
     end
 
     it 'accepts a path with spaces' do
+      yomu = nil
+
       assert_silent do
         yomu = Yomu.new 'test/samples/sample filename with spaces.pages'
-
-        assert_block { yomu.path? }
-        assert_block { !yomu.uri? }
-        assert_block { !yomu.stream? }
       end
+
+      assert yomu.path?
+      refute yomu.uri?
+      refute yomu.stream?
     end
 
     it 'accepts a URI' do
+      yomu = nil
+
       assert_silent do
         yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
-
-        assert_block { yomu.uri? }
-        assert_block { !yomu.path? }
-        assert_block { !yomu.stream? }
       end
+
+      assert yomu.uri?
+      refute yomu.path?
+      refute yomu.stream?
     end
 
     it 'accepts a stream or object that can be read' do
+      yomu = nil
+
       assert_silent do
         File.open 'test/samples/sample.pages', 'r' do |file|
           yomu = Yomu.new file
-
-        assert_block { yomu.stream? }
-        assert_block { !yomu.path? }
-        assert_block { !yomu.uri? }
         end
       end
+
+      assert yomu.stream?
+      refute yomu.path?
+      refute yomu.uri?
     end
 
     it 'does not accept a path to a missing file' do
@@ -94,48 +104,36 @@ describe Yomu do
   describe 'initialized with a given path' do
     let(:yomu) { Yomu.new 'test/samples/sample.pages' }
 
-    describe '#text' do
-      it 'reads text' do
-        assert_includes yomu.text, 'The quick brown fox jumped over the lazy cat.'
-      end
+    specify '#text reads text' do
+      assert_includes yomu.text, 'The quick brown fox jumped over the lazy cat.'
     end
 
-    describe '#metadata' do
-      it 'reads metadata' do
-        assert_equal 'application/vnd.apple.pages', yomu.metadata['Content-Type']
-      end
+    specify '#metada reads metadata' do
+      assert_equal 'application/vnd.apple.pages', yomu.metadata['Content-Type']
     end
   end
 
   describe 'initialized with a given URI' do
     let(:yomu) { Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx' }
 
-    describe '#text' do
-      it 'reads text' do
-        assert_includes yomu.text, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
-      end
+    specify '#text reads text' do
+      assert_includes yomu.text, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
     end
 
-    describe '#metadata' do
-      it 'reads metadata' do
-        assert_equal 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', yomu.metadata['Content-Type']
-      end
+    specify '#metadata reads metadata' do
+      assert_equal 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', yomu.metadata['Content-Type']
     end
   end
 
   describe 'initialized with a given stream' do
     let(:yomu) { Yomu.new File.open('test/samples/sample.pages', 'rb') }
 
-    describe '#text' do
-      it 'reads text' do
-        assert_includes yomu.text, 'The quick brown fox jumped over the lazy cat.'
-      end
+    specify '#text reads text' do
+      assert_includes yomu.text, 'The quick brown fox jumped over the lazy cat.'
     end
 
-    describe '#metadata' do
-      it 'reads metadata' do
-        assert_equal 'application/vnd.apple.pages', yomu.metadata['Content-Type']
-      end
+    specify '#metadata reads metadata' do
+      assert_equal 'application/vnd.apple.pages', yomu.metadata['Content-Type']
     end
   end
 end

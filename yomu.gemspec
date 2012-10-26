@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "yomu"
   gem.require_paths = ["lib"]
   gem.version       = Yomu::VERSION
+
+  gem.add_development_dependency 'minitest'
 end
