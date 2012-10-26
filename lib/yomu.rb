@@ -12,7 +12,7 @@ class Yomu
   #   data = File.read 'sample.pages'
   #   text = Yomu.read :text, data
   #   metadata = Yomu.read :metadata, data
-  #
+
   def self.read(type, data)
     switch = case type
     when :text
@@ -43,7 +43,7 @@ class Yomu
   # From a stream or an object which responds to +read+
   #
   #   Yomu.new File.open('sample.pages')
-  #
+
   def initialize(input)
     if input.is_a? String
       if input =~ URI::regexp
@@ -64,7 +64,7 @@ class Yomu
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.text
-  #
+
   def text
     return @text if defined? @text
 
@@ -75,7 +75,7 @@ class Yomu
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.metadata['Content-Type']
-  #
+
   def metadata
     return @metadata if defined? @metadata
 
@@ -86,7 +86,7 @@ class Yomu
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.path? #=> true
-  #
+
   def path?
     defined? @path
   end
@@ -95,7 +95,7 @@ class Yomu
   #
   #   yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
   #   yomu.uri? #=> true
-  #
+
   def uri?
     defined? @uri
   end
@@ -105,7 +105,7 @@ class Yomu
   #   file = File.open('sample.pages')
   #   yomu = Yomu.new file
   #   yomu.stream? #=> true
-  #
+
   def stream?
     defined? @stream
   end
@@ -114,7 +114,7 @@ class Yomu
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.data
-  #
+
   def data
     return @data if defined? @data
 
