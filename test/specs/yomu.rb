@@ -3,6 +3,10 @@ require_relative '../helper.rb'
 describe Yomu do
   let(:data) { File.read 'test/samples/sample.pages' }
 
+  before do
+    ENV['JAVA_HOME'] = nil
+  end
+
   describe '.read' do
     it 'reads text' do
       text = Yomu.read :text, data
@@ -98,6 +102,18 @@ describe Yomu do
           Yomu.new object
         end
       end
+    end
+  end
+
+  describe '.java' do
+    specify 'with no specified JAVA_HOME' do
+      assert_equal 'java', Yomu.send(:java)
+    end
+
+    specify 'with a specified JAVA_HOME' do
+      ENV['JAVA_HOME'] = '/path/to/java/home'
+
+      assert_equal '/path/to/java/home/bin/java', Yomu.send(:java)
     end
   end
 

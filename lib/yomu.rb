@@ -21,7 +21,7 @@ class Yomu
       '-m'
     end
 
-    result = IO.popen "java -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
+    result = IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
       io.write data
       io.close_write
       io.read
@@ -128,4 +128,9 @@ class Yomu
 
     @data
   end
+
+  def self.java
+    ENV['JAVA_HOME'] ? ENV['JAVA_HOME'] + '/bin/java' : 'java'
+  end
+  private_class_method :java
 end
