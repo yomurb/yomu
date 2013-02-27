@@ -27,6 +27,8 @@ class Yomu
       io.read
     end
 
+    result = enclose_metadata_fields(result) 
+
     type == :metadata ? YAML.load(result) : result
   end
 
@@ -127,6 +129,12 @@ class Yomu
     end
 
     @data
+  end
+
+  def self.enclose_metadata_fields metadata
+    metadata.each_line.map do |l|
+      l.gsub(/: (.*)/,': "\1"')
+    end.join
   end
 
   def self.java

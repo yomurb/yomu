@@ -2,6 +2,7 @@ require_relative '../helper.rb'
 
 describe Yomu do
   let(:data) { File.read 'test/samples/sample.pages' }
+  let(:doc) { File.read 'test/samples/enclosure_problem.doc' }
 
   before do
     ENV['JAVA_HOME'] = nil
@@ -18,6 +19,11 @@ describe Yomu do
       metadata = Yomu.read :metadata, data
 
       assert_equal 'application/vnd.apple.pages', metadata['Content-Type']
+    end
+
+    it 'accepts metadata with colon' do
+      metadata = Yomu.read :metadata, doc
+      assert_equal 'problem: test', metadata['dc:title']
     end
   end
 
