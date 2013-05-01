@@ -1,6 +1,7 @@
 require 'yomu/version'
 
 require 'net/http'
+require 'mime/types'
 require 'yaml'
 
 class Yomu
@@ -19,6 +20,8 @@ class Yomu
       '-t'
     when :metadata
       '-m'
+    when :mimetype
+      '-m'
     end
 
     result = IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
@@ -27,9 +30,14 @@ class Yomu
       io.read
     end
 
-    result = enclose_metadata_fields(result) 
-
-    type == :metadata ? YAML.load(result) : result
+    case type
+    when :text
+      result
+    when :metadata
+      YAML.load enclose_metadata_fields(result)
+    when :mimetype
+      MIME::Types[YAML.load(enclose_metadata_fields(result))['Content-Type']].first
+    end
   end
 
   # Create a new instance of Yomu with a given document.
@@ -82,6 +90,18 @@ class Yomu
     return @metadata if defined? @metadata
 
     @metadata = Yomu.read :metadata, data
+  end
+
+  # Returns the mimetype object of the Yomu document.
+  #
+  #   yomu = Yomu.new 'sample.docx'
+  #   yomu.mimetype.content_type #=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  #   yomu.mimetype.extensions #=> ['docx']
+
+  def mimetype
+    return @mimetype if defined? @mimetype
+
+    @mimetype = MIME::Types[metadata['Content-Type']].first
   end
 
   # Returns +true+ if the Yomu document was specified using a file path.

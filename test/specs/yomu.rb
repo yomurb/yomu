@@ -26,6 +26,13 @@ describe Yomu do
 
       assert_equal 'problem: test', metadata['dc:title']
     end
+
+    it 'reads mimetype' do
+      mimetype = Yomu.read :mimetype, data
+
+      assert_equal 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', mimetype.content_type
+      assert_includes mimetype.extensions, 'docx'
+    end
   end
 
   describe '.new' do

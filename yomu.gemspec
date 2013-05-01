@@ -15,5 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Yomu::VERSION
 
+  gem.add_runtime_dependency 'mime-types', '~> 1.23'
+
   gem.add_development_dependency 'minitest'
 end
