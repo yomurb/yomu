@@ -15,13 +15,14 @@ For the complete list of supported formats, please visit the Apache Tika
 
 ## Usage
 
-Text and metadata can be extracted by calling `Yomu.read` directly:
+Text, metadata and MIME type information can be extracted by calling `Yomu.read` directly:
 
     require 'yomu'
 
     data = File.read 'sample.pages'
     text = Yomu.read :text, data
     metadata = Yomu.read :metadata, data
+    mimetype = Yomu.read :mimetype, data
 
 ### Reading text from a given filename
 
@@ -52,6 +53,14 @@ Metadata is returned as a hash.
 
     yomu = Yomu.new 'sample.pages'
     yomu.metadata['Content-Type'] #=> "application/vnd.apple.pages"
+
+### Reading MIME types
+
+MIME type is returned as a MIME::Type object.
+
+    yomu = Yomu.new 'sample.docx'
+    yomu.mimetype.content_type #=> "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    yomu.mimetype.extensions #=> ['docx']
 
 ## Installation and Dependencies
 
