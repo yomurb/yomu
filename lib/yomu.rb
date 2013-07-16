@@ -34,9 +34,9 @@ class Yomu
     when :text
       result
     when :metadata
-      YAML.load enclose_metadata_fields(result)
+      YAML.load quote(result)
     when :mimetype
-      MIME::Types[YAML.load(enclose_metadata_fields(result))['Content-Type']].first
+      MIME::Types[YAML.load(quote(result))['Content-Type']].first
     end
   end
 
@@ -151,11 +151,10 @@ class Yomu
     @data
   end
 
-  def self.enclose_metadata_fields metadata
-    metadata.each_line.map do |l|
-      l.gsub(/: (.*)/, ': "\1"')
-    end.join
+  def self.quote(metadata)
+    metadata.gsub(/: (.*: .*)$/, ': "\1"')
   end
+  private_class_method :quote
 
   def self.java
     ENV['JAVA_HOME'] ? ENV['JAVA_HOME'] + '/bin/java' : 'java'

@@ -21,11 +21,17 @@ describe Yomu do
       expect( metadata['Content-Type'] ).to eql 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     end
 
-    it 'reads metadata values with colons' do
-      doc = File.read 'spec/samples/enclosure_problem.doc'
-      metadata = Yomu.read :metadata, doc
+    it 'reads metadata values with colons as strings' do
+      data = File.read 'spec/samples/sample-metadata-values-with-colons.doc'
+      metadata = Yomu.read :metadata, data
 
       expect( metadata['dc:title'] ).to eql 'problem: test'
+    end
+
+    it 'reads metadata time values as time values' do
+      metadata = Yomu.read :metadata, data
+
+      expect( metadata['Creation-Date'] ).to be_a Time
     end
 
     it 'reads mimetype' do
@@ -113,7 +119,7 @@ describe Yomu do
       expect( yomu.text).to include 'The quick brown fox jumped over the lazy cat.'
     end
 
-    specify '#metada reads metadata' do
+    specify '#metadata reads metadata' do
       expect( yomu.metadata['Content-Type'] ).to eql 'application/vnd.apple.pages'
     end
   end
