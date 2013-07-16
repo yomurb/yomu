@@ -153,7 +153,7 @@ class Yomu
 
   def self.enclose_metadata_fields metadata
     metadata.each_line.map do |l|
-      l.gsub(/: (.*)/,': "\1"')
+      l.gsub(/: (.*)/, ': "\1"')
     end.join
   end
 

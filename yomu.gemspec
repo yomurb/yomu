@@ -17,5 +17,5 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'mime-types', '~> 1.23'
 
-  gem.add_development_dependency 'minitest'
+  gem.add_development_dependency 'rspec'
 end
