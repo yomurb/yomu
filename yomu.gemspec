@@ -1,21 +1,26 @@
-# -*- encoding: utf-8 -*-
-require File.expand_path('../lib/yomu/version', __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'yomu/version'
 
-Gem::Specification.new do |gem|
-  gem.authors       = ["Erol Fornoles"]
-  gem.email         = ["erol.fornoles@gmail.com"]
-  gem.description   = %q{Read text and metadata from files and documents (.doc, .docx, .pages, .odt, .rtf, .pdf)}
-  gem.summary       = %q{Read text and metadata from files and documents (.doc, .docx, .pages, .odt, .rtf, .pdf)}
-  gem.homepage      = "http://erol.github.com/yomu"
+Gem::Specification.new do |spec|
+  spec.name          = "yomu"
+  spec.version       = Yomu::VERSION
+  spec.authors       = ["Erol Fornoles"]
+  spec.email         = ["erol.fornoles@gmail.com"]
+  spec.description   = %q{Read text and metadata from files and documents (.doc, .docx, .pages, .odt, .rtf, .pdf)}
+  spec.summary       = %q{Read text and metadata from files and documents (.doc, .docx, .pages, .odt, .rtf, .pdf)}
+  spec.homepage      = "http://erol.github.com/yomu"
+  spec.license       = "MIT"
 
-  gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.name          = "yomu"
-  gem.require_paths = ["lib"]
-  gem.version       = Yomu::VERSION
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
 
-  gem.add_runtime_dependency 'mime-types', '~> 1.23'
+  spec.add_runtime_dependency 'mime-types', '~> 1.23'
 
-  gem.add_development_dependency 'rspec'
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec", "~> 2.14"
 end
