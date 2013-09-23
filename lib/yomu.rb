@@ -18,6 +18,8 @@ class Yomu
     switch = case type
     when :text
       '-t'
+    when :html
+      '-h'
     when :metadata
       '-m'
     when :mimetype
@@ -32,6 +34,8 @@ class Yomu
 
     case type
     when :text
+      result
+    when :html
       result
     when :metadata
       YAML.load quote(result)
@@ -79,6 +83,17 @@ class Yomu
     return @text if defined? @text
 
     @text = Yomu.read :text, data
+  end
+
+  # Returns the text content of the Yomu document in HTML.
+  #
+  #   yomu = Yomu.new 'sample.pages'
+  #   yomu.html
+
+  def html
+    return @text if defined? @text
+
+    @text = Yomu.read :html, data
   end
 
   # Returns the metadata hash of the Yomu document.
