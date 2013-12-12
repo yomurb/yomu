@@ -17,50 +17,62 @@ For the complete list of supported formats, please visit the Apache Tika
 
 Text, metadata and MIME type information can be extracted by calling `Yomu.read` directly:
 
-    require 'yomu'
+```ruby
+require 'yomu'
 
-    data = File.read 'sample.pages'
-    text = Yomu.read :text, data
-    metadata = Yomu.read :metadata, data
-    mimetype = Yomu.read :mimetype, data
+data = File.read 'sample.pages'
+text = Yomu.read :text, data
+metadata = Yomu.read :metadata, data
+mimetype = Yomu.read :mimetype, data
+```
 
 ### Reading text from a given filename
 
 Create a new instance of Yomu and pass a filename.
 
-    yomu = Yomu.new 'sample.pages'
-    text = yomu.text
+```ruby
+yomu = Yomu.new 'sample.pages'
+text = yomu.text
+```
 
 ### Reading text from a given URL
 
 This is useful for reading remote files, like documents hosted on Amazon S3.
 
-    yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
-    text = yomu.text
+```ruby
+yomu = Yomu.new 'http://svn.apache.org/repos/asf/poi/trunk/test-data/document/sample.docx'
+text = yomu.text
+```
 
 ### Reading text from a stream
 
 Yomu can also read from a stream or any object that responds to `read`, including file uploads from Ruby on Rails or Sinatra.
 
-    post '/:name/:filename' do
-      yomu = Yomu.new params[:data][:tempfile]
-      yomu.text
-    end
+```ruby
+post '/:name/:filename' do
+  yomu = Yomu.new params[:data][:tempfile]
+  yomu.text
+end
+```
 
 ### Reading metadata
 
 Metadata is returned as a hash.
 
-    yomu = Yomu.new 'sample.pages'
-    yomu.metadata['Content-Type'] #=> "application/vnd.apple.pages"
+```ruby
+yomu = Yomu.new 'sample.pages'
+yomu.metadata['Content-Type'] #=> "application/vnd.apple.pages"
+```
 
 ### Reading MIME types
 
 MIME type is returned as a MIME::Type object.
 
-    yomu = Yomu.new 'sample.docx'
-    yomu.mimetype.content_type #=> "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    yomu.mimetype.extensions #=> ['docx']
+```ruby
+yomu = Yomu.new 'sample.docx'
+yomu.mimetype.content_type #=> "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+yomu.mimetype.extensions #=> ['docx']
+```
 
 ## Installation and Dependencies
 
