@@ -1,5 +1,3 @@
-![Google Analytics](https://ga-beacon.appspot.com/UA-31066891-2/yomu/code)
-
 # Yomu 読む
 
 [Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata from files and documents using the [Apache Tika](http://tika.apache.org/) content analysis toolkit.
