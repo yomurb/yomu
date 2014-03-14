@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/Erol/yomu.png)](https://codeclimate.com/github/Erol/yomu)
+
 # Yomu 読む
 
 [Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata from files and documents using the [Apache Tika](http://tika.apache.org/) content analysis toolkit.
