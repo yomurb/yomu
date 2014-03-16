@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Erol/yomu.png?branch=master)](https://travis-ci.org/Erol/yomu)
 [![Code Climate](https://codeclimate.com/github/Erol/yomu.png)](https://codeclimate.com/github/Erol/yomu)
 
 # Yomu 読む
