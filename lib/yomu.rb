@@ -60,10 +60,10 @@ class Yomu
 
   def initialize(input)
     if input.is_a? String
-      if input =~ URI::regexp
-        @uri = URI.parse input
-      elsif File.exists? input
+      if File.exists? input
         @path = input
+      elsif input =~ URI::regexp
+        @uri = URI.parse input
       else
         raise Errno::ENOENT.new "missing file or invalid URI - #{input}"
       end
