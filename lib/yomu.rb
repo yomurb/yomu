@@ -2,7 +2,7 @@ require 'yomu/version'
 
 require 'net/http'
 require 'mime/types'
-require 'yaml'
+require 'json'
 
 class Yomu
   GEMPATH = File.dirname(File.dirname(__FILE__))
@@ -21,9 +21,9 @@ class Yomu
     when :html
       '-h'
     when :metadata
-      '-m'
+      '-m -j'
     when :mimetype
-      '-m'
+      '-m -j'
     end
 
     result = IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
@@ -38,9 +38,9 @@ class Yomu
     when :html
       result
     when :metadata
-      YAML.load quote(result)
+      JSON.parse(result)
     when :mimetype
-      MIME::Types[YAML.load(quote(result))['Content-Type']].first
+      MIME::Types[JSON.parse(result)['Content-Type']].first
     end
   end
 
@@ -165,11 +165,6 @@ class Yomu
 
     @data
   end
-
-  def self.quote(metadata)
-    metadata.gsub(/: (.*: .*)$/, ': "\1"')
-  end
-  private_class_method :quote
 
   def self.java
     ENV['JAVA_HOME'] ? ENV['JAVA_HOME'] + '/bin/java' : 'java'
