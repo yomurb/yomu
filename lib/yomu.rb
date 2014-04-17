@@ -25,7 +25,7 @@ class Yomu
     when :mimetype
       '-m -j'
     end
-
+    
     result = IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
       io.write data
       io.close_write
@@ -116,13 +116,27 @@ class Yomu
   def mimetype
     return @mimetype if defined? @mimetype
 
-    @mimetype = MIME::Types[metadata['Content-Type']].first
+    type = metadata["Content-Type"].is_a?(Array) ? metadata["Content-Type"].first : metadata["Content-Type"]
+    
+    @mimetype = MIME::Types[type].first
   end
 
   # Returns +true+ if the Yomu document was specified using a file path.
   #
   #   yomu = Yomu.new 'sample.pages'
   #   yomu.path? #=> true
+
+
+  def creation_date
+    return @creation_date if defined? @creation_date
+ 
+    if metadata['Creation-Date']
+      @creation_date = Time.parse(metadata['Creation-Date'])
+    else
+      nil
+    end
+  end
+
 
   def path?
     defined? @path
