@@ -28,12 +28,6 @@ describe Yomu do
       expect( metadata['dc:title'] ).to eql 'problem: test'
     end
 
-    it 'reads metadata time values as time values' do
-      metadata = Yomu.read :metadata, data
-
-      expect( metadata['Creation-Date'] ).to be_a Time
-    end
-
     it 'reads mimetype' do
       mimetype = Yomu.read :mimetype, data
 
@@ -100,6 +94,14 @@ describe Yomu do
     end
   end
 
+
+  describe '.creation_date' do
+    let(:yomu) { Yomu.new 'spec/samples/sample.pages' }
+    it 'should retur Time' do 
+      expect( yomu.creation_date ).to be_a Time
+    end
+  end
+
   describe '.java' do
     specify 'with no specified JAVA_HOME' do
       expect( Yomu.send(:java) ).to eql 'java'
@@ -120,7 +122,7 @@ describe Yomu do
     end
 
     specify '#metadata reads metadata' do
-      expect( yomu.metadata['Content-Type'] ).to eql 'application/vnd.apple.pages'
+      expect( yomu.metadata['Content-Type'] ).to eql ["application/vnd.apple.pages", "application/vnd.apple.pages"]
     end
   end
 
@@ -144,7 +146,7 @@ describe Yomu do
     end
 
     specify '#metadata reads metadata' do
-      expect( yomu.metadata['Content-Type'] ).to eql 'application/vnd.apple.pages'
+      expect( yomu.metadata['Content-Type'] ).to eql ["application/vnd.apple.pages", "application/vnd.apple.pages"]
     end
   end
 end
