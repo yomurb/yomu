@@ -91,9 +91,9 @@ class Yomu
   #   yomu.html
 
   def html
-    return @text if defined? @text
+    return @html if defined? @html
 
-    @text = Yomu.read :html, data
+    @html = Yomu.read :html, data
   end
 
   # Returns the metadata hash of the Yomu document.
