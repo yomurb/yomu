@@ -80,6 +80,10 @@ yomu.mimetype.extensions #=> ['docx']
 
 ## Installation and Dependencies
 
+### Java Runtime
+
+Yomu packages the Apache Tika application jar and requires a working JRE for it to work.
+
 Add this line to your application's Gemfile:
 
     gem 'yomu'
@@ -91,8 +95,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install yomu
-
-**Yomu packages the Apache Tika application jar and requires a working JRE for it to work.**
 
 ## Contributing
 
