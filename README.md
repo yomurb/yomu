@@ -1,6 +1,6 @@
 [![Travis Build Status](http://img.shields.io/travis/Erol/yomu.svg?style=flat)](https://travis-ci.org/Erol/yomu)
 [![Code Climate Score](http://img.shields.io/codeclimate/github/Erol/yomu.svg?style=flat)](https://codeclimate.com/github/Erol/yomu)
-[![Gem Version](http://img.shields.io/gem/v/yomu.svg)](#)
+[![Gem Version](http://img.shields.io/gem/v/yomu.svg?style=flat)](#)
 
 # Yomu 読む
 
