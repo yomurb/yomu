@@ -4,9 +4,16 @@ require 'net/http'
 require 'mime/types'
 require 'json'
 
+require 'socket'
+require 'stringio'
+
 class Yomu
   GEMPATH = File.dirname(File.dirname(__FILE__))
   JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.6.jar')
+  DEFAULT_SERVER_PORT = 9293 # an arbitrary, but perfectly cromulent, port
+
+  @@server_port = nil
+  @@server_pid = nil
 
   # Read text or metadata from a data buffer.
   #
@@ -15,22 +22,7 @@ class Yomu
   #   metadata = Yomu.read :metadata, data
 
   def self.read(type, data)
-    switch = case type
-    when :text
-      '-t'
-    when :html
-      '-h'
-    when :metadata
-      '-m -j'
-    when :mimetype
-      '-m -j'
-    end
-    
-    result = IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
-      io.write data
-      io.close_write
-      io.read
-    end
+    result = @@server_pid ? self._server_read(type, data) : self._client_read(type, data)
 
     case type
     when :text
@@ -42,6 +34,48 @@ class Yomu
     when :mimetype
       MIME::Types[JSON.parse(result)['Content-Type']].first
     end
+  end
+
+  def self._client_read(type, data)
+    switch = case type
+    when :text
+      '-t'
+    when :html
+      '-h'
+    when :metadata
+      '-m -j'
+    when :mimetype
+      '-m -j'
+    end
+
+    IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
+      io.write data
+      io.close_write
+      io.read
+    end
+  end
+
+
+  def self._server_read(_, data)
+    s = TCPSocket.new('localhost', @@server_port)
+    file = StringIO.new(data, 'r')
+
+    while 1
+      chunk = file.read(65536)
+      break unless chunk
+      s.write(chunk)
+    end
+
+    # tell Tika that we're done sending data
+    s.shutdown(Socket::SHUT_WR)
+
+    resp = ''
+    while 1
+      chunk = s.recv(65536)
+      break if chunk.empty? || !chunk
+      resp << chunk
+    end
+    resp
   end
 
   # Create a new instance of Yomu with a given document.
@@ -137,7 +171,6 @@ class Yomu
     end
   end
 
-
   def path?
     defined? @path
   end
@@ -178,6 +211,50 @@ class Yomu
     end
 
     @data
+  end
+
+  # Returns pid of Tika server, started as a new spawned process.
+  #
+  #  type :html, :text or :metadata
+  #  custom_port e.g. 9293
+  #   
+  #  Yomu.server(:text, 9294)
+  #
+  def self.server(type, custom_port=nil)
+    switch = case type
+    when :text
+      '-t'
+    when :html
+      '-h'
+    when :metadata
+      '-m -j'
+    when :mimetype
+      '-m -j'
+    end
+
+    @@server_port = custom_port || DEFAULT_SERVER_PORT
+    
+    @@server_pid = Process.spawn("#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} --server --port #{@@server_port} #{switch}")
+    sleep(2) # Give the server 2 seconds to spin up.
+    @@server_pid
+  end
+
+  # Kills server started by Yomu.server
+  # 
+  #  Always run this when you're done, or else Tika might run until you kill it manually
+  #  You might try putting your extraction in a begin..rescue...ensure...end block and
+  #    putting this method in the ensure block.
+  #
+  #  Yomu.server(:text)
+  #  reports = ["report1.docx", "report2.doc", "report3.pdf"]
+  #  begin
+  #    my_texts = reports.map{|report_path| Yomu.new(report_path).text }
+  #  rescue
+  #  ensure
+  #    Yomu.kill_server!
+  #  end
+  def self.kill_server!
+    Process.kill('INT', @@server_pid) if @@server_pid
   end
 
   def self.java
