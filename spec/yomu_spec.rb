@@ -149,4 +149,34 @@ describe Yomu do
       expect( yomu.metadata['Content-Type'] ).to eql ["application/vnd.apple.pages", "application/vnd.apple.pages"]
     end
   end
+
+  context 'working as server mode' do
+    specify '#starts and kills server' do
+      begin
+        Yomu.server(:text)
+        expect(Yomu.class_variable_get(:@@server_pid)).not_to be_nil
+        expect(Yomu.class_variable_get(:@@server_port)).not_to be_nil
+
+        s = TCPSocket.new('localhost', Yomu.class_variable_get(:@@server_port))
+        expect(s).to be_a TCPSocket
+        s.close
+      ensure
+        port = Yomu.class_variable_get(:@@server_port)
+        Yomu.kill_server!
+        sleep 2
+        expect { TCPSocket.new('localhost', port) }.to raise_error Errno::ECONNREFUSED
+      end
+    end
+
+    specify '#runs samples through server mode' do
+      begin
+        Yomu.server(:text)
+        expect(Yomu.new('spec/samples/sample.pages').text).to include 'The quick brown fox jumped over the lazy cat.'
+        expect(Yomu.new('spec/samples/sample filename with spaces.pages').text).to include 'The quick brown fox jumped over the lazy cat.'
+        expect(Yomu.new('spec/samples/sample.docx').text).to include 'The quick brown fox jumped over the lazy cat.'
+      ensure
+        Yomu.kill_server!
+      end
+    end
+  end
 end

@@ -254,7 +254,11 @@ class Yomu
   #    Yomu.kill_server!
   #  end
   def self.kill_server!
-    Process.kill('INT', @@server_pid) if @@server_pid
+    if @@server_pid
+      Process.kill('INT', @@server_pid)
+      @@server_pid = nil
+      @@server_port = nil
+    end
   end
 
   def self.java
