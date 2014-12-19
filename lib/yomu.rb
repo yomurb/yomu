@@ -6,7 +6,7 @@ require 'json'
 
 class Yomu
   GEMPATH = File.dirname(File.dirname(__FILE__))
-  JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.5.jar')
+  JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.6.jar')
 
   # Read text or metadata from a data buffer.
   #
