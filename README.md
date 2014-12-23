@@ -4,6 +4,8 @@
 
 # Yomu 読む
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Erol/yomu?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 [Yomu](http://erol.github.com/yomu) is a library for extracting text and metadata from files and documents using the [Apache Tika](http://tika.apache.org/) content analysis toolkit.
 
 Here are some of the formats supported:
