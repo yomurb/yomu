@@ -17,7 +17,7 @@ class Yomu
 
   # Read text or metadata from a data buffer.
   #
-  #   data = File.read 'sample.pages'
+  #   data = File.binread 'sample.pages'
   #   text = Yomu.read :text, data
   #   metadata = Yomu.read :metadata, data
 
@@ -58,7 +58,7 @@ class Yomu
 
   def self._server_read(_, data)
     s = TCPSocket.new('localhost', @@server_port)
-    file = StringIO.new(data, 'r')
+    file = StringIO.new(data, 'rb')
 
     while 1
       chunk = file.read(65536)
@@ -203,7 +203,7 @@ class Yomu
     return @data if defined? @data
 
     if path?
-      @data = File.read @path
+      @data = File.binread @path
     elsif uri?
       @data = Net::HTTP.get @uri
     elsif stream?

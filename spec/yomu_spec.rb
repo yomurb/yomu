@@ -2,7 +2,7 @@ require 'helper.rb'
 require 'yomu'
 
 describe Yomu do
-  let(:data) { File.read 'spec/samples/sample.docx' }
+  let(:data) { File.binread 'spec/samples/sample.docx' }
 
   before do
     ENV['JAVA_HOME'] = nil
@@ -22,7 +22,7 @@ describe Yomu do
     end
 
     it 'reads metadata values with colons as strings' do
-      data = File.read 'spec/samples/sample-metadata-values-with-colons.doc'
+      data = File.binread 'spec/samples/sample-metadata-values-with-colons.doc'
       metadata = Yomu.read :metadata, data
 
       expect( metadata['dc:title'] ).to eql 'problem: test'
