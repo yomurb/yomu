@@ -97,7 +97,7 @@ describe Yomu do
 
   describe '.creation_date' do
     let(:yomu) { Yomu.new 'spec/samples/sample.pages' }
-    it 'should retur Time' do 
+    it 'should return Time' do 
       expect( yomu.creation_date ).to be_a Time
     end
   end
