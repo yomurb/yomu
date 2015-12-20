@@ -25,33 +25,37 @@ class Yomu
     result = @@server_pid ? self._server_read(type, data) : self._client_read(type, data)
 
     case type
-    when :text
-      result
-    when :html
-      result
-    when :metadata
-      JSON.parse(result)
-    when :mimetype
-      MIME::Types[JSON.parse(result)['Content-Type']].first
+      when :text
+        result
+      when :html
+        result
+      when :metadata
+        JSON.parse(result)
+      when :mimetype
+        MIME::Types[JSON.parse(result)['Content-Type']].first
     end
   end
 
   def self._client_read(type, data)
-    switch = case type
-    when :text
-      '-t'
-    when :html
-      '-h'
-    when :metadata
-      '-m -j'
-    when :mimetype
-      '-m -j'
-    end
+    switch = determine_type(type)
 
     IO.popen "#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} #{switch}", 'r+' do |io|
       io.write data
       io.close_write
       io.read
+    end
+  end
+
+  def self.determine_type(type)
+    case type
+      when :text
+        '-t'
+      when :html
+        '-h'
+      when :metadata
+        '-m -j'
+      when :mimetype
+        '-m -j'
     end
   end
 
@@ -151,7 +155,7 @@ class Yomu
     return @mimetype if defined? @mimetype
 
     type = metadata["Content-Type"].is_a?(Array) ? metadata["Content-Type"].first : metadata["Content-Type"]
-    
+
     @mimetype = MIME::Types[type].first
   end
 
@@ -163,7 +167,7 @@ class Yomu
 
   def creation_date
     return @creation_date if defined? @creation_date
- 
+
     if metadata['Creation-Date']
       @creation_date = Time.parse(metadata['Creation-Date'])
     else
@@ -221,19 +225,10 @@ class Yomu
   #  Yomu.server(:text, 9294)
   #
   def self.server(type, custom_port=nil)
-    switch = case type
-    when :text
-      '-t'
-    when :html
-      '-h'
-    when :metadata
-      '-m -j'
-    when :mimetype
-      '-m -j'
-    end
+    switch = determine_type(type)
 
     @@server_port = custom_port || DEFAULT_SERVER_PORT
-    
+
     @@server_pid = Process.spawn("#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} --server --port #{@@server_port} #{switch}")
     sleep(2) # Give the server 2 seconds to spin up.
     @@server_pid
@@ -264,5 +259,6 @@ class Yomu
   def self.java
     ENV['JAVA_HOME'] ? ENV['JAVA_HOME'] + '/bin/java' : 'java'
   end
+
   private_class_method :java
 end
