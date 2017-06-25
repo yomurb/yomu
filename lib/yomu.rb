@@ -3,6 +3,7 @@ require 'yomu/version'
 require 'net/http'
 require 'mime/types'
 require 'json'
+require 'time'
 
 require 'socket'
 require 'stringio'
