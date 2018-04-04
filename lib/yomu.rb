@@ -151,7 +151,7 @@ class Yomu
     return @mimetype if defined? @mimetype
 
     type = metadata["Content-Type"].is_a?(Array) ? metadata["Content-Type"].first : metadata["Content-Type"]
-    
+
     @mimetype = MIME::Types[type].first
   end
 
@@ -163,7 +163,7 @@ class Yomu
 
   def creation_date
     return @creation_date if defined? @creation_date
- 
+
     if metadata['Creation-Date']
       @creation_date = Time.parse(metadata['Creation-Date'])
     else
@@ -217,7 +217,7 @@ class Yomu
   #
   #  type :html, :text or :metadata
   #  custom_port e.g. 9293
-  #   
+  #
   #  Yomu.server(:text, 9294)
   #
   def self.server(type, custom_port=nil)
@@ -233,14 +233,14 @@ class Yomu
     end
 
     @@server_port = custom_port || DEFAULT_SERVER_PORT
-    
+
     @@server_pid = Process.spawn("#{java} -Djava.awt.headless=true -jar #{Yomu::JARPATH} --server --port #{@@server_port} #{switch}")
     sleep(2) # Give the server 2 seconds to spin up.
     @@server_pid
   end
 
   # Kills server started by Yomu.server
-  # 
+  #
   #  Always run this when you're done, or else Tika might run until you kill it manually
   #  You might try putting your extraction in a begin..rescue...ensure...end block and
   #    putting this method in the ensure block.
@@ -262,7 +262,7 @@ class Yomu
   end
 
   def self.java
-    ENV['JAVA_HOME'] ? ENV['JAVA_HOME'] + '/bin/java' : 'java'
+    ENV['JAVA_HOME'] ? File.join(ENV['JAVA_HOME'], 'bin', 'java') : 'java'
   end
   private_class_method :java
 end
