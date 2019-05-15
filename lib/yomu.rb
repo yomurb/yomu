@@ -9,7 +9,7 @@ require 'stringio'
 
 class Yomu
   GEMPATH = File.dirname(File.dirname(__FILE__))
-  JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.19.1.jar')
+  JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.20.jar')
   DEFAULT_SERVER_PORT = 9293 # an arbitrary, but perfectly cromulent, port
 
   @@server_port = nil
