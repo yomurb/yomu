@@ -6,6 +6,7 @@ require 'json'
 
 require 'socket'
 require 'stringio'
+require 'date'
 
 class Yomu
   GEMPATH = File.dirname(File.dirname(__FILE__))
@@ -165,7 +166,7 @@ class Yomu
     return @creation_date if defined? @creation_date
  
     if metadata['Creation-Date']
-      @creation_date = Time.parse(metadata['Creation-Date'])
+      @creation_date = DateTime.parse(metadata['Creation-Date'])
     else
       nil
     end
