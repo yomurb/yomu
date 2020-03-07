@@ -6,10 +6,11 @@ require 'json'
 
 require 'socket'
 require 'stringio'
+require 'date'
 
 class Yomu
   GEMPATH = File.dirname(File.dirname(__FILE__))
-  JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.11.jar')
+  JARPATH = File.join(Yomu::GEMPATH, 'jar', 'tika-app-1.23.jar')
   DEFAULT_SERVER_PORT = 9293 # an arbitrary, but perfectly cromulent, port
 
   @@server_port = nil
@@ -165,7 +166,7 @@ class Yomu
     return @creation_date if defined? @creation_date
  
     if metadata['Creation-Date']
-      @creation_date = Time.parse(metadata['Creation-Date'])
+      @creation_date = DateTime.parse(metadata['Creation-Date'])
     else
       nil
     end
