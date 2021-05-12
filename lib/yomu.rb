@@ -262,7 +262,7 @@ class Yomu
   end
 
   def self.java
-    ENV['JAVA_HOME'] ? ENV['JAVA_HOME'] + '/bin/java' : 'java'
+    ENV['JAVA_HOME'].to_s.strip.length > 0 ? File.join(ENV['JAVA_HOME'], '/bin/java') : 'java'
   end
   private_class_method :java
 end
