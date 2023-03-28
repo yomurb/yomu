@@ -18,10 +18,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'mime-types', '~> 1.23'
+  spec.add_runtime_dependency 'mime-types', '~> 3.4.1'
   spec.add_runtime_dependency 'json', '~> 2.6'
 
   spec.add_development_dependency 'bundler', '~> 2.4.10'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.12.0'
+
+  spec.required_ruby_version = '>= 2.7.3'
 end
